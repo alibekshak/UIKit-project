@@ -8,7 +8,7 @@
 import Foundation
 
 struct BaseManagerURL {
-    static var fakerapiURL: URL {
+    nonisolated static var fakerapiURL: URL {
         guard let url = URL(string: "https://fakerapi.it/api/v2") else {
             fatalError("Invalid URL")
         }

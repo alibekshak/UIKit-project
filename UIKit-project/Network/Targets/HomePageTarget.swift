@@ -13,13 +13,14 @@ enum HomePageTarget {
 }
 
 extension HomePageTarget: BaseTargetType {
-    var path: String {
+    nonisolated var path: String {
         switch self {
         case .getText:
             "/texts"
         }
     }
-    var task: Moya.Task {
+    
+    nonisolated var task: Moya.Task {
         switch self {
         case .getText:
                 .requestPlain

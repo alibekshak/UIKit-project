@@ -13,23 +13,23 @@ protocol BaseTargetType: TargetType {
 }
 
 extension BaseTargetType {
-    public var baseURL: URL {
+    nonisolated public var baseURL: URL {
         return BaseManagerURL.fakerapiURL
     }
     
-    public var path: String {
+    nonisolated public var path: String {
         return ""
     }
     
-    public var method: Moya.Method {
+    nonisolated public var method: Moya.Method {
         return .get
     }
     
-    public var sampleData: Data {
+    nonisolated public var sampleData: Data {
         Data()
     }
     
-    public var headers: [String: String]? {
+    nonisolated public var headers: [String: String]? {
         var result: [String: String] = [
             "Content-Type": "application/json"
         ]
@@ -37,7 +37,7 @@ extension BaseTargetType {
         return result
     }
     
-    public var validate: Bool {
+    nonisolated public var validate: Bool {
         return true
     }
 }
