@@ -1,18 +1,17 @@
 //
-//  ViewController.swift
+//  HomePageViewController.swift
 //  UIKit-project
 //
-//  Created by Alibek Shakirov on 03.11.2025.
+//  Created by Alibek Shakirov on 17.11.2025.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class HomePageViewController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
     }
     
 }
-
