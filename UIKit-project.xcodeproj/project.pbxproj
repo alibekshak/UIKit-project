@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		188912FB2ECDE02500120DC8 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 188912FA2ECDE02500120DC8 /* Moya */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		1867751B2EB860EF0039FFB1 /* UIKit-project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UIKit-project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188912FB2ECDE02500120DC8 /* Moya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +51,7 @@
 			isa = PBXGroup;
 			children = (
 				1867751D2EB860EF0039FFB1 /* UIKit-project */,
+				188912F92ECDE02500120DC8 /* Frameworks */,
 				1867751C2EB860EF0039FFB1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +62,13 @@
 				1867751B2EB860EF0039FFB1 /* UIKit-project.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		188912F92ECDE02500120DC8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -78,6 +91,7 @@
 			);
 			name = "UIKit-project";
 			packageProductDependencies = (
+				188912FA2ECDE02500120DC8 /* Moya */,
 			);
 			productName = "UIKit-project";
 			productReference = 1867751B2EB860EF0039FFB1 /* UIKit-project.app */;
@@ -148,6 +162,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P5JPX93769;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "UIKit-project/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -183,6 +198,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P5JPX93769;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "UIKit-project/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -363,6 +379,14 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		188912FA2ECDE02500120DC8 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18A5CCAB2EC1D29800D56E33 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 186775132EB860EF0039FFB1 /* Project object */;
 }
