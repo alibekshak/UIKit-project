@@ -13,7 +13,7 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         self.setupTabs()
         
-        self.tabBar.tintColor = .white
+        self.tabBar.tintColor = .blue
         self.tabBar.unselectedItemTintColor = .black
     }
     

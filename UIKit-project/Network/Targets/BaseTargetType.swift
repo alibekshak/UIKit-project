@@ -30,7 +30,7 @@ extension BaseTargetType {
     }
     
     nonisolated public var headers: [String: String]? {
-        var result: [String: String] = [
+        let result: [String: String] = [
             "Content-Type": "application/json"
         ]
         
