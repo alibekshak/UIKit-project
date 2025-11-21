@@ -13,13 +13,21 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         self.setupTabs()
         
-        self.tabBar.tintColor = .white
+        self.tabBar.tintColor = .blue
         self.tabBar.unselectedItemTintColor = .black
     }
-
+    
     private func setupTabs() {
-        let homeScreen = createNavigation(with: "Home", and: UIImage(systemName: "house"), viewController: ViewController())
-        let settingScreen = createNavigation(with: "Setting", and: UIImage(systemName: "gear"), viewController: SettingsViewController())
+        let homeScreen = createNavigation(
+            with: "Home",
+            and: UIImage(systemName: "house"),
+            viewController: HomePageViewController()
+        )
+        let settingScreen = createNavigation(
+            with: "Setting",
+            and: UIImage(systemName: "gear"),
+            viewController: SettingsViewController()
+        )
         
         self.setViewControllers([homeScreen, settingScreen], animated: true)
     }
