@@ -15,14 +15,14 @@ class HomePageViewController: UIViewController {
         TextInfoData(
             title: "Title some ",
             author: "Author A",
-            genre: "some",
-            content: "Text"
+            genre: "some GEnre",
+            content: "Text Text TEXT Text TEXT Text TEXT Text TEXT Text TEXT Text TEXT Text TEXT"
         ),
         TextInfoData(
             title: "Title some 2",
             author: "Author AADs",
-            genre: "some some",
-            content: "Text TEXT"
+            genre: "some some GEnre",
+            content: "Text TEXT Text TEXT Text TEXT Text TEXT Text TEXT"
     )]
     
     // MARK: - UI
