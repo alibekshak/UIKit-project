@@ -9,21 +9,11 @@ import UIKit
 
 class HomePageViewController: UIViewController {
     
+    var output: HomePageOutput?
+    
     // MARK: - Private properties
     
-    private var infoData: [TextInfoData] = [
-        TextInfoData(
-            title: "Title some ",
-            author: "Author A",
-            genre: "some GEnre",
-            content: "Text Text TEXT Text TEXT Text TEXT Text TEXT Text TEXT Text TEXT Text TEXT"
-        ),
-        TextInfoData(
-            title: "Title some 2",
-            author: "Author AADs",
-            genre: "some some GEnre",
-            content: "Text TEXT Text TEXT Text TEXT Text TEXT Text TEXT"
-    )]
+    private var infoData: [TextInfoData] = []
     
     // MARK: - UI
     
@@ -51,6 +41,11 @@ class HomePageViewController: UIViewController {
         view.backgroundColor = .systemBackground
         setupNavigationTitle()
         setup()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        output?.loadInfo()
     }
     
     // MARK: Private methods
@@ -102,4 +97,25 @@ extension HomePageViewController: UITableViewDataSource, UITableViewDelegate {
         navigationController?.pushViewController(vc, animated: true)
     }
     
+}
+
+// MARK: - HomePageInput
+
+extension HomePageViewController: HomePageInput {
+    func setLoading(_ isLoading: Bool) {
+        if isLoading {
+            mainTableView.isHidden = true
+        } else {
+            mainTableView.isHidden = false
+        }
+    }
+    
+    func showError(_ message: String) {
+        // TODO: Create toast
+    }
+    
+    func showInfo(content: [TextInfoData]) {
+        self.infoData = content
+        self.mainTableView.reloadData()
+    }
 }

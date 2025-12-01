@@ -13,7 +13,7 @@ struct TextInfoResponseModel: Codable {
     let locale: String?
     let seed: String?
     let total: Int?
-    let data: [TextInfoData?]
+    let data: [TextInfoData]?
 }
 
 struct TextInfoData: Codable {
