@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomePageViewController: UIViewController {
+class HomePageViewController: BaseViewController {
     
     var output: HomePageOutput?
     
@@ -105,8 +105,10 @@ extension HomePageViewController: HomePageInput {
     func setLoading(_ isLoading: Bool) {
         if isLoading {
             mainTableView.isHidden = true
+            showLoading()
         } else {
             mainTableView.isHidden = false
+            hideLoading()
         }
     }
     
