@@ -44,3 +44,19 @@ class BaseViewController: UIViewController {
         ])
     }
 }
+
+extension BaseViewController {
+    func showAlert(
+        title: String? = nil,
+    ) {
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        alert.addAction(
+            UIAlertAction(
+                title: "Ok",
+                style: UIAlertAction.Style.default
+            )
+        )
+        
+        present(alert, animated: true, completion: nil)
+    }
+}

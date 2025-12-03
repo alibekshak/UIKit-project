@@ -113,7 +113,7 @@ extension HomePageViewController: HomePageInput {
     }
     
     func showError(_ message: String) {
-        // TODO: Create toast
+        showAlert(title: message)
     }
     
     func showInfo(content: [TextInfoData]) {
