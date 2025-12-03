@@ -1,0 +1,40 @@
+//
+//  HomePageViewModel.swift
+//  UIKit-project
+//
+//  Created by Alibek Shakirov on 01.12.2025.
+//
+
+import Foundation
+
+class HomePageViewModel {
+    
+    weak var view: HomePageInput?
+    
+    private let homePageService: HomePageService?
+    
+    init(homePageService: HomePageService?) {
+        self.homePageService = homePageService
+    }
+    
+    func getTextInfo() {
+        view?.setLoading(true)
+        homePageService?.getTextInfo { result in
+            self.view?.setLoading(false)
+            switch result {
+            case .success(let response):
+                self.view?.showInfo(content: response.data ?? [])
+            case .failure(let error):
+                self.view?.showError(error.localizedDescription)
+            }
+        }
+    }
+}
+
+extension HomePageViewModel: HomePageOutput {
+    func loadInfo() {
+        getTextInfo()
+    }
+}
+
+

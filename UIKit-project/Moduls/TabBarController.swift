@@ -21,7 +21,7 @@ class TabBarController: UITabBarController {
         let homeScreen = createNavigation(
             with: "Home",
             and: UIImage(systemName: "house"),
-            viewController: HomePageViewController()
+            viewController: createHomePageViewController()
         )
         let settingScreen = createNavigation(
             with: "Setting",
@@ -42,5 +42,15 @@ class TabBarController: UITabBarController {
         navigation.tabBarItem.image = image
         
         return navigation
+    }
+    
+    private func createHomePageViewController() -> UIViewController {
+        let viewControllers = HomePageViewController()
+        let viewModel = HomePageViewModel(homePageService: HomePageService())
+        
+        viewModel.view = viewControllers
+        viewControllers.output = viewModel
+        
+        return viewControllers
     }
 }
