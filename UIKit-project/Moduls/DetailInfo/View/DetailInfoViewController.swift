@@ -73,6 +73,7 @@ class DetailInfoViewController: UIViewController {
     init(item: TextInfoData) {
         self.item = item
         super.init(nibName: nil, bundle: nil)
+        self.hidesBottomBarWhenPushed = true
     }
     
     required init?(coder: NSCoder) {

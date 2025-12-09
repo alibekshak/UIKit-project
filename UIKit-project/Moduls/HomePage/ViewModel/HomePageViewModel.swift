@@ -10,6 +10,7 @@ import Foundation
 class HomePageViewModel {
     
     weak var view: HomePageInput?
+    var router: HomePageRouterInput?
     
     private let homePageService: HomePageService?
     
@@ -32,6 +33,10 @@ class HomePageViewModel {
 }
 
 extension HomePageViewModel: HomePageOutput {
+    func tapToDetailInfoView(infoData: TextInfoData) {
+        router?.routToDetailInfoView(info: infoData)
+    }
+    
     func loadInfo() {
         getTextInfo()
     }
