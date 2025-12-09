@@ -15,5 +15,5 @@ protocol HomePageInput: AnyObject {
 
 protocol HomePageOutput: AnyObject {
     func loadInfo()
-    
+    func tapToDetailInfoView(infoData: TextInfoData)
 }

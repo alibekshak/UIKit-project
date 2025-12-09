@@ -92,9 +92,7 @@ extension HomePageViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let data = infoData[indexPath.row]
-        
-        let vc = DetailInfoViewController(item: data)
-        navigationController?.pushViewController(vc, animated: true)
+        output?.tapToDetailInfoView(infoData: data)
     }
 }
 
