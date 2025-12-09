@@ -96,7 +96,6 @@ extension HomePageViewController: UITableViewDataSource, UITableViewDelegate {
         let vc = DetailInfoViewController(item: data)
         navigationController?.pushViewController(vc, animated: true)
     }
-    
 }
 
 // MARK: - HomePageInput
