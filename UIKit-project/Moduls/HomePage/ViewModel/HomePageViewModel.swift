@@ -12,9 +12,9 @@ class HomePageViewModel {
     weak var view: HomePageInput?
     var router: HomePageRouterInput?
     
-    private let homePageService: HomePageService?
+    private let homePageService: HomePageServiceProtocol?
     
-    init(homePageService: HomePageService?) {
+    init(homePageService: HomePageServiceProtocol?) {
         self.homePageService = homePageService
     }
     

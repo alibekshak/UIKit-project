@@ -12,9 +12,7 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupTabs()
-        
-        self.tabBar.tintColor = .blue
-        self.tabBar.unselectedItemTintColor = .black
+        self.tabBarSetting()
     }
     
     private func setupTabs() {
@@ -44,15 +42,16 @@ class TabBarController: UITabBarController {
         return navigation
     }
     
+    private func tabBarSetting() {
+        self.tabBar.tintColor = .blue
+        self.tabBar.unselectedItemTintColor = .black
+    }
+    
+    // MARK: - ViewController creation methods
+    
     private func createHomePageViewController() -> UIViewController {
-        let viewControllers = HomePageViewController()
-        let viewModel = HomePageViewModel(homePageService: HomePageService())
-        let router = HomePageRouter()
-        
-        viewModel.view = viewControllers
-        viewModel.router = router
-        viewControllers.output = viewModel
-        router.viewController = viewControllers
+        let homeAssembly: HomePageModuleAssembly = DependencyManager.shared.inject(HomePageModuleAssembly.self)
+        let viewControllers = homeAssembly.assemble()
         
         return viewControllers
     }
