@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		183323C72EE9664600ADD8D3 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 183323C62EE9664600ADD8D3 /* Swinject */; };
 		188912FB2ECDE02500120DC8 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 188912FA2ECDE02500120DC8 /* Moya */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				188912FB2ECDE02500120DC8 /* Moya in Frameworks */,
+				183323C72EE9664600ADD8D3 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +94,7 @@
 			name = "UIKit-project";
 			packageProductDependencies = (
 				188912FA2ECDE02500120DC8 /* Moya */,
+				183323C62EE9664600ADD8D3 /* Swinject */,
 			);
 			productName = "UIKit-project";
 			productReference = 1867751B2EB860EF0039FFB1 /* UIKit-project.app */;
@@ -123,6 +126,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				18A5CCAB2EC1D29800D56E33 /* XCRemoteSwiftPackageReference "Moya" */,
+				183323C52EE9664600ADD8D3 /* XCRemoteSwiftPackageReference "Swinject" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1867751C2EB860EF0039FFB1 /* Products */;
@@ -370,6 +374,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		183323C52EE9664600ADD8D3 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.0;
+			};
+		};
 		18A5CCAB2EC1D29800D56E33 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
@@ -381,6 +393,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		183323C62EE9664600ADD8D3 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 183323C52EE9664600ADD8D3 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
 		188912FA2ECDE02500120DC8 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 18A5CCAB2EC1D29800D56E33 /* XCRemoteSwiftPackageReference "Moya" */;

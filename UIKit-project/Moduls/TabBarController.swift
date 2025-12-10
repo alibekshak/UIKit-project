@@ -45,14 +45,8 @@ class TabBarController: UITabBarController {
     }
     
     private func createHomePageViewController() -> UIViewController {
-        let viewControllers = HomePageViewController()
-        let viewModel = HomePageViewModel(homePageService: HomePageService())
-        let router = HomePageRouter()
-        
-        viewModel.view = viewControllers
-        viewModel.router = router
-        viewControllers.output = viewModel
-        router.viewController = viewControllers
+        let homeAssembly: HomePageModuleAssembly = DependencyManager.shared.inject(HomePageModuleAssembly.self)
+        let viewControllers = homeAssembly.assemble()
         
         return viewControllers
     }
