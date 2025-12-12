@@ -15,4 +15,10 @@ class HomePageRouter: HomePageRouterInput {
         let vc = DetailInfoViewController(item: info)
         viewController?.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func routToFavoritePageView() {
+        let vc = FavoritePageViewController()
+        vc.hidesBottomBarWhenPushed = true
+        viewController?.navigationController?.pushViewController(vc, animated: true)
+    }
 }

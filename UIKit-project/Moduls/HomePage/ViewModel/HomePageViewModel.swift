@@ -33,6 +33,10 @@ class HomePageViewModel {
 }
 
 extension HomePageViewModel: HomePageOutput {
+    func navigateToFavoritePage() {
+        router?.routToFavoritePageView()
+    }
+    
     func tapToDetailInfoView(infoData: TextInfoData) {
         router?.routToDetailInfoView(info: infoData)
     }

@@ -82,7 +82,7 @@ class HomePageViewController: BaseViewController {
     // MARK: - Actions
     
     @objc private func didTapFavorite() {
-        print("Favorite tapped")
+        output?.navigateToFavoritePage()
     }
 }
 
