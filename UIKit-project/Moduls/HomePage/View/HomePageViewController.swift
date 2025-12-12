@@ -36,11 +36,24 @@ class HomePageViewController: BaseViewController {
         return tableView
     }()
     
+    private lazy var favoriteButton: UIBarButtonItem = {
+        let item = UIBarButtonItem(
+            image: UIImage(systemName: "heart"),
+            style: .plain,
+            target: self,
+            action: #selector(didTapFavorite)
+        )
+        item.tintColor = .red
+        return item
+    }()
+    
+    // MARK: Init method
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupNavigationTitle()
-        setup()
+        setupView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,11 +62,13 @@ class HomePageViewController: BaseViewController {
     }
     
     // MARK: Private methods
+    
     private func setupNavigationTitle() {
         navigationItem.titleView = navigationTitle
+        navigationItem.rightBarButtonItem = favoriteButton
     }
     
-    private func setup() {
+    private func setupView() {
         view.addSubview(mainTableView)
         
         NSLayoutConstraint.activate([
@@ -64,6 +79,11 @@ class HomePageViewController: BaseViewController {
         ])
     }
     
+    // MARK: - Actions
+    
+    @objc private func didTapFavorite() {
+        print("Favorite tapped")
+    }
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
