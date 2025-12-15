@@ -11,14 +11,18 @@ class HomePageRouter: HomePageRouterInput {
     
     weak var viewController: UIViewController?
     
+    private let dependencyManager = DependencyManager.shared
+    
     func routToDetailInfoView(info: TextInfoData) {
         let vc = DetailInfoViewController(item: info)
         viewController?.navigationController?.pushViewController(vc, animated: true)
     }
     
     func routToFavoritePageView() {
-        let vc = FavoritePageViewController()
-        vc.hidesBottomBarWhenPushed = true
-        viewController?.navigationController?.pushViewController(vc, animated: true)
+        let favoritePageAssembly: FavoritePageAssembly = dependencyManager.inject(FavoritePageAssembly.self)
+        let createdVC = favoritePageAssembly.assembly()
+        
+        createdVC.hidesBottomBarWhenPushed = true
+        viewController?.navigationController?.pushViewController(createdVC, animated: true)
     }
 }

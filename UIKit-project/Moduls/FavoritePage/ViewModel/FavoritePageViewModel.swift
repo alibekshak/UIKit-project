@@ -7,9 +7,10 @@
 
 import Foundation
 
-final class FavoritePageViewModel {
+final class FavoritePageViewModel: FavoritePageOutput {
     
     weak var view: FavoritePageInput?
+    var router: FavoritePageRouterInput?
     
     private let store: TextInfoStoreProtocol
     
@@ -17,17 +18,12 @@ final class FavoritePageViewModel {
         self.store = store
     }
     
-    func fetchInfo() {
-        if let storedInfo = try? store.fetchAll(), !storedInfo.isEmpty {
-            view?.showStoredInfo(content: storedInfo)
-        }
-    }
-}
-
-// MARK: - FavoritePageOutput
-
-extension FavoritePageViewModel: FavoritePageOutput {
     func loadStoredInfo() {
-        fetchInfo()
+        let stored = (try? store.fetchAll()) ?? []
+        view?.showStoredInfo(content: stored)
+    }
+    
+    func tapToDetailInfoView(infoData: TextInfoData) {
+        router?.routToDetailInfoView(info: infoData)
     }
 }

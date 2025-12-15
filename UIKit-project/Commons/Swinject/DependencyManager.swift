@@ -42,6 +42,14 @@ private extension DependencyManager {
             HomePageModuleAssembly(injection: self)
         }
         
+        container.register(FavoritePageAssembly.self) { [unowned self] _ in
+            FavoritePageAssembly(injection: self)
+        }
+        
+        container.register(TextInfoStoreProtocol.self) { _ in
+            TextInfoCoreDataStore()
+        }.inObjectScope(.container)
+        
         return self
     }
 }
