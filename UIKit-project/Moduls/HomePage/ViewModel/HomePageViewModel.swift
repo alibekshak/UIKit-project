@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HomePageViewModel {
+final class HomePageViewModel {
     
     weak var view: HomePageInput?
     var router: HomePageRouterInput?
