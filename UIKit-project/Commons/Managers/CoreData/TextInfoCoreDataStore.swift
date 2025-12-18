@@ -15,24 +15,22 @@ final class TextInfoCoreDataStore: TextInfoStoreProtocol {
         self.stack = stack
     }
     
-    func save(_ items: [TextInfoData]) throws {
+    func save(_ item: TextInfoData) throws {
         let context = stack.newBackgroundContext()
 
         try context.performAndWait {
-            for item in items {
-                let request: NSFetchRequest<TextInfoEntity> = TextInfoEntity.fetchRequest()
-                request.fetchLimit = 1
-                request.predicate = NSPredicate(format: "id == %@", item.stableId)
-
-                let entity = try context.fetch(request).first ?? TextInfoEntity(context: context)
-                entity.id = item.stableId
-                entity.title = item.title
-                entity.author = item.author
-                entity.genre = item.genre
-                entity.content = item.content
-                entity.createdAt = entity.createdAt ?? Date()
-            }
-
+            let request: NSFetchRequest<TextInfoEntity> = TextInfoEntity.fetchRequest()
+            request.fetchLimit = 1
+            request.predicate = NSPredicate(format: "id == %@", item.stableId)
+            
+            let entity = try context.fetch(request).first ?? TextInfoEntity(context: context)
+            entity.id = item.stableId
+            entity.title = item.title
+            entity.author = item.author
+            entity.genre = item.genre
+            entity.content = item.content
+            entity.createdAt = entity.createdAt ?? Date()
+            
             if context.hasChanges {
                 try context.save()
             }

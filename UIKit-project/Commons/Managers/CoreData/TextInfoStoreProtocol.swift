@@ -8,7 +8,7 @@
 import Foundation
 
 protocol TextInfoStoreProtocol {
-    func save(_ items: [TextInfoData]) throws
+    func save(_ item: TextInfoData) throws
     func fetchAll() throws -> [TextInfoData]
     func deleteAll() throws
 }

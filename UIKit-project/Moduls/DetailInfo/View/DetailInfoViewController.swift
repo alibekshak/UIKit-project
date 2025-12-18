@@ -9,6 +9,8 @@ import UIKit
 
 class DetailInfoViewController: UIViewController {
     
+    var output: DetailInfoOutput?
+    
     private let item: TextInfoData
     
     // MARK: - UI
@@ -68,6 +70,18 @@ class DetailInfoViewController: UIViewController {
         return stack
     }()
     
+    private lazy var addToFavorite: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            image: UIImage(systemName: "plus"),
+            style: .plain,
+            target: self,
+            action: #selector(didAddToFavorite)
+        )
+        button.tintColor = .red
+        
+        return button
+    }()
+    
     // MARK: - Init
     
     init(item: TextInfoData) {
@@ -82,13 +96,24 @@ class DetailInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        title = item.title
+        pageettings()
         setup()
         makeConstraints()
     }
     
+    // MARK: - Actions
+    
+    @objc private func didAddToFavorite() {
+//        output?.addToFavorite(data: item)
+    }
+    
     // MARK: - Private methods
+    
+    private func pageettings() {
+        view.backgroundColor = .systemBackground
+        title = item.title
+        navigationItem.rightBarButtonItem = addToFavorite
+    }
     
     private func setup() {
         view.addSubview(scrollView)
