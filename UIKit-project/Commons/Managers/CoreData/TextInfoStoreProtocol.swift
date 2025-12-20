@@ -11,4 +11,5 @@ protocol TextInfoStoreProtocol {
     func save(_ item: TextInfoData) throws
     func fetchAll() throws -> [TextInfoData]
     func deleteAll() throws
+    func exists(_ item: TextInfoData) throws -> Bool
 }

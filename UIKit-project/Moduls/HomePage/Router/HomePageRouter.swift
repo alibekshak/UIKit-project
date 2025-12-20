@@ -14,8 +14,10 @@ class HomePageRouter: HomePageRouterInput {
     private let dependencyManager = DependencyManager.shared
     
     func routToDetailInfoView(info: TextInfoData) {
-        let vc = DetailInfoViewController(item: info)
-        viewController?.navigationController?.pushViewController(vc, animated: true)
+        let detailInfoAssebly: DetailInfoAssembly = dependencyManager.inject(DetailInfoAssembly.self)
+        let createVC = detailInfoAssebly.assembly(item: info)
+        
+        viewController?.navigationController?.pushViewController(createVC, animated: true)
     }
     
     func routToFavoritePageView() {

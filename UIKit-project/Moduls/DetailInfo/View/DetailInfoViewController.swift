@@ -99,12 +99,13 @@ class DetailInfoViewController: UIViewController {
         pageettings()
         setup()
         makeConstraints()
+        output?.onViewDidLoad(item: item)
     }
     
     // MARK: - Actions
     
     @objc private func didAddToFavorite() {
-//        output?.addToFavorite(data: item)
+        output?.addToFavorite(data: item)
     }
     
     // MARK: - Private methods
@@ -144,5 +145,20 @@ class DetailInfoViewController: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)
             ])
+    }
+}
+
+// MARK: - DetailInfoInput
+
+extension DetailInfoViewController: DetailInfoInput {
+    
+    func setFavoriteButtonEnabled(_ enabled: Bool) {
+        addToFavorite.isEnabled = enabled
+    }
+    
+    func setFavoriteButtonState(isFavorite: Bool) {
+        
+        addToFavorite.image = UIImage(systemName: isFavorite ? "checkmark" : "plus")
+        addToFavorite.tintColor = isFavorite ? .systemGray : .systemRed
     }
 }

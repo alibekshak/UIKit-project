@@ -16,6 +16,7 @@ final class DependencyManager: ModuleInjecting {
         container = Container()
         registerServices()
         registerModules()
+        registerManagers()
     }
     
     // Реализация протокола ModuleInjecting
@@ -46,6 +47,14 @@ private extension DependencyManager {
             FavoritePageAssembly(injection: self)
         }
         
+        container.register(DetailInfoAssembly.self) { [unowned self] _ in
+            DetailInfoAssembly(injection: self)
+        }
+        
+        return self
+    }
+    
+    func registerManagers() -> Self {
         container.register(TextInfoStoreProtocol.self) { _ in
             TextInfoCoreDataStore()
         }.inObjectScope(.container)

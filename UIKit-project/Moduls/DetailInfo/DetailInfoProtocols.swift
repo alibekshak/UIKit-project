@@ -7,6 +7,12 @@
 
 import Foundation
 
-protocol DetailInfoOutput {
+protocol DetailInfoOutput: AnyObject {
     func addToFavorite(data: TextInfoData)
+    func onViewDidLoad(item: TextInfoData)
+}
+
+protocol DetailInfoInput: AnyObject {
+    func setFavoriteButtonEnabled(_ enabled: Bool)
+    func setFavoriteButtonState(isFavorite: Bool)
 }

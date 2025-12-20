@@ -15,6 +15,15 @@ final class TextInfoCoreDataStore: TextInfoStoreProtocol {
         self.stack = stack
     }
     
+    func exists(_ item: TextInfoData) throws -> Bool {
+        let ctx = stack.viewContext
+        let request: NSFetchRequest<TextInfoEntity> = TextInfoEntity.fetchRequest()
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "id == %@", item.stableId)
+        
+        return try ctx.count(for: request) > 0
+    }
+    
     func save(_ item: TextInfoData) throws {
         let context = stack.newBackgroundContext()
 
