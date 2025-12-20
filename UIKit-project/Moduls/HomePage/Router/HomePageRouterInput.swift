@@ -9,4 +9,5 @@ import Foundation
 
 protocol HomePageRouterInput {
     func routToDetailInfoView(info: TextInfoData)
+    func routToFavoritePageView()
 }

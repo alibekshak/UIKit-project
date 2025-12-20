@@ -32,15 +32,17 @@ class BaseViewController: UIViewController {
     // MARK: - Private methods
     
     private func setupLoaderView() {
+        guard let containerView = navigationController?.view ?? view else { return }
+        
         loaderView.translatesAutoresizingMaskIntoConstraints = false
         loaderView.alpha = 0.0
-        view.addSubview(loaderView)
+        containerView.addSubview(loaderView)
         
         NSLayoutConstraint.activate([
-            loaderView.topAnchor.constraint(equalTo: view.topAnchor),
-            loaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            loaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            loaderView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            loaderView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            loaderView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            loaderView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            loaderView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
     }
 }

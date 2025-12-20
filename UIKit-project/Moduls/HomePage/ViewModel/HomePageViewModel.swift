@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HomePageViewModel {
+final class HomePageViewModel {
     
     weak var view: HomePageInput?
     var router: HomePageRouterInput?
@@ -33,6 +33,10 @@ class HomePageViewModel {
 }
 
 extension HomePageViewModel: HomePageOutput {
+    func navigateToFavoritePage() {
+        router?.routToFavoritePageView()
+    }
+    
     func tapToDetailInfoView(infoData: TextInfoData) {
         router?.routToDetailInfoView(info: infoData)
     }

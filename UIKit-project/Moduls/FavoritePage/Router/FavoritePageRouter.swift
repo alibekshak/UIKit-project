@@ -1,14 +1,13 @@
 //
-//  HomePageRouter.swift
+//  FavoritePageRouter.swift
 //  UIKit-project
 //
-//  Created by Alibek Shakirov on 09.12.2025.
+//  Created by Alibek Shakirov on 15.12.2025.
 //
 
 import UIKit
 
-class HomePageRouter: HomePageRouterInput {
-    
+class FavoritePageRouter: FavoritePageRouterInput {
     weak var viewController: UIViewController?
     
     private let dependencyManager = DependencyManager.shared
@@ -18,13 +17,5 @@ class HomePageRouter: HomePageRouterInput {
         let createVC = detailInfoAssebly.assembly(item: info)
         
         viewController?.navigationController?.pushViewController(createVC, animated: true)
-    }
-    
-    func routToFavoritePageView() {
-        let favoritePageAssembly: FavoritePageAssembly = dependencyManager.inject(FavoritePageAssembly.self)
-        let createdVC = favoritePageAssembly.assembly()
-        
-        createdVC.hidesBottomBarWhenPushed = true
-        viewController?.navigationController?.pushViewController(createdVC, animated: true)
     }
 }

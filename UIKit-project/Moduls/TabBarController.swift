@@ -39,6 +39,14 @@ class TabBarController: UITabBarController {
         navigation.tabBarItem.title = title
         navigation.tabBarItem.image = image
         
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.backgroundColor = .systemBackground
+        
+        navigation.navigationBar.standardAppearance = appearance
+        navigation.navigationBar.scrollEdgeAppearance = appearance
+        navigation.navigationBar.compactAppearance = appearance
+        
         return navigation
     }
     
