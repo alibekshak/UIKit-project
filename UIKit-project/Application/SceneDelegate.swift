@@ -20,9 +20,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
         
-        window.rootViewController = TabBarController()
+     
+        window.rootViewController = splashScreen()
         window.makeKeyAndVisible()
         self.window = window
+    }
+    
+    func splashScreen() -> UIViewController {
+        let splash = SplashScreenViewController()
+        splash.onFinish = { [weak self] in
+            guard let window = self?.window else { return }
+            UIView.transition(with: window, duration: 0.35, options: .transitionCrossDissolve) {
+                window.rootViewController = TabBarController()
+            }
+        }
+        
+        return splash
     }
 }
 
