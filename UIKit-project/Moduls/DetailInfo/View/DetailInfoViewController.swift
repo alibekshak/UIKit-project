@@ -96,7 +96,7 @@ class DetailInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        pageettings()
+        pageSettings()
         setup()
         makeConstraints()
         output?.onViewDidLoad(item: item)
@@ -110,7 +110,7 @@ class DetailInfoViewController: UIViewController {
     
     // MARK: - Private methods
     
-    private func pageettings() {
+    private func pageSettings() {
         view.backgroundColor = .systemBackground
         title = item.title
         navigationItem.rightBarButtonItem = addToFavorite
