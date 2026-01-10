@@ -51,6 +51,10 @@ private extension DependencyManager {
             DetailInfoAssembly(injection: self)
         }
         
+        container.register(SettingsPageModuleAssembly.self) {  [unowned self] _ in
+            SettingsPageModuleAssembly(injection: self)
+        }
+        
         return self
     }
     

@@ -9,6 +9,8 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
+    var output: SettingsPageOutput?
+    
     // MARK: - UI
     
     private lazy var profileButton: UIButton = {
@@ -113,7 +115,7 @@ class SettingsViewController: UIViewController {
     }
     
     @objc private func didTapFavorite() {
-        print("избранное")
+        output?.navigateToFavoritePage()
     }
     
     @objc private func didTapExit() {
