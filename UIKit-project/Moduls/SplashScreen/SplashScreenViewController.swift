@@ -11,6 +11,9 @@ class SplashScreenViewController: UIViewController {
     
     var onFinish: (() -> Void)?
     
+    private var didAnimate = false
+    private var finishTask: Task<Void, Never>?
+    
     // MARK: - UI
     
     private let logoImageView: UIImageView = {
@@ -21,6 +24,9 @@ class SplashScreenViewController: UIViewController {
         image.translatesAutoresizingMaskIntoConstraints = false
         image.alpha = 0
         image.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
+        image.isAccessibilityElement = true
+        image.accessibilityLabel = "App logo"
+        
         return image
     }()
     
@@ -32,12 +38,14 @@ class SplashScreenViewController: UIViewController {
         label.text = "Project UIKit"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.alpha = 0
+        label.isAccessibilityElement = true
+        label.accessibilityLabel = "Project UIKit"
         
         return label
     }()
     
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -47,7 +55,20 @@ class SplashScreenViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        guard !didAnimate else { return }
+        didAnimate = true
         animateSplash()
+        scheduleFinish()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        finishTask?.cancel()
+        finishTask = nil
+    }
+    
+    deinit {
+        finishTask?.cancel()
     }
     
     private func setup() {
@@ -62,7 +83,7 @@ class SplashScreenViewController: UIViewController {
             logoImageView.widthAnchor.constraint(equalToConstant: 140),
             logoImageView.heightAnchor.constraint(equalTo: logoImageView.widthAnchor),
             
-
+            
             textLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 16),
             textLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             textLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
@@ -72,17 +93,31 @@ class SplashScreenViewController: UIViewController {
     // MARK: - Animation
     
     private func animateSplash() {
-        UIView.animate(withDuration: 0.5, delay: 0.05, options: [.curveEaseOut]) {
-            self.logoImageView.alpha = 1
-            self.logoImageView.transform = .identity
-        }
-
-        UIView.animate(withDuration: 0.45, delay: 0.18, options: [.curveEaseOut]) {
-            self.textLabel.alpha = 1
+        if UIAccessibility.isReduceMotionEnabled {
+            logoImageView.alpha = 1
+            logoImageView.transform = .identity
+            textLabel.alpha = 1
+            return
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { [weak self] in
-            self?.onFinish?()
+        UIView.animateKeyframes(withDuration: 0.6, delay: 0.05, options: [.calculationModeCubic]) {
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.7) {
+                self.logoImageView.alpha = 1
+                self.logoImageView.transform = .identity
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.25, relativeDuration: 0.6) {
+                self.textLabel.alpha = 1
+            }
+        }
+    }
+    
+    private func scheduleFinish() {
+        finishTask = Task { [weak self] in
+            try? await Task.sleep(nanoseconds: 1_200_000_000)
+            guard !Task.isCancelled else { return }
+            await MainActor.run {
+                self?.onFinish?()
+            }
         }
     }
 }
