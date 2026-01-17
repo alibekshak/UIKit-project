@@ -8,6 +8,8 @@
 import UIKit
 
 class TabBarController: UITabBarController {
+    
+    let dependencyManager = DependencyManager.shared
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,14 +60,14 @@ class TabBarController: UITabBarController {
     // MARK: - ViewController creation methods
     
     private func createHomePageViewController() -> UIViewController {
-        let homeAssembly: HomePageModuleAssembly = DependencyManager.shared.inject(HomePageModuleAssembly.self)
+        let homeAssembly: HomePageModuleAssembly = dependencyManager.inject(HomePageModuleAssembly.self)
         let viewControllers = homeAssembly.assemble()
         
         return viewControllers
     }
     
     private func createSettingsViewController() -> UIViewController {
-        let homeAssembly: SettingsPageModuleAssembly = DependencyManager.shared.inject(SettingsPageModuleAssembly.self)
+        let homeAssembly: SettingsPageModuleAssembly = dependencyManager.inject(SettingsPageModuleAssembly.self)
         let viewControllers = homeAssembly.assemble()
         
         return viewControllers

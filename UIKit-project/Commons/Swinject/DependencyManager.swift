@@ -55,6 +55,10 @@ private extension DependencyManager {
             SettingsPageModuleAssembly(injection: self)
         }
         
+        container.register(ProfilePageModuleAssembly.self) { [unowned self] _ in
+            ProfilePageModuleAssembly(injection: self)
+        }
+        
         return self
     }
     

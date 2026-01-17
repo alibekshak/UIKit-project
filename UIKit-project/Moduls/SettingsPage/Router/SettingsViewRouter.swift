@@ -21,4 +21,11 @@ class SettingsViewRouter: SettingsViewRouterInput {
         viewController?.navigationController?.pushViewController(createdVC, animated: true)
     }
     
+    func routToProfilePage() {
+        let profilePageAssembly: ProfilePageModuleAssembly = dependencyManager.inject(ProfilePageModuleAssembly.self)
+        let createdVC = profilePageAssembly.assemble()
+        
+        createdVC.hidesBottomBarWhenPushed = true
+        viewController?.navigationController?.pushViewController(createdVC, animated: true)
+    }
 }
