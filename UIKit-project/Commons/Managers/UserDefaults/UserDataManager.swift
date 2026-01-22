@@ -7,29 +7,29 @@
 
 import Foundation
 
-final class UserDataManager {
+final class UserDataManager: UserDataManagerProtocol {
     
     private enum Keys {
         static let username = "savedUsername"
     }
     
-    private static let userDefault = UserDefaults.standard
+    private let userDefault = UserDefaults.standard
     
     // MARK: - Username Management
     
-    static func saveUsername(_ username: String) {
+    func saveUsername(_ username: String) {
         userDefault.set(username, forKey: Keys.username)
     }
     
-    static func getUsername() -> String? {
+    func getUsername() -> String? {
         return userDefault.string(forKey: Keys.username)
     }
     
-    static func hasUsername() -> Bool {
+    func hasUsername() -> Bool {
         return userDefault.string(forKey: Keys.username) != nil
     }
     
-    static func removeUsername() {
+    func removeUsername() {
         userDefault.removeObject(forKey: Keys.username)
     }
 }
