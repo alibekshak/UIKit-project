@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ProfilePageViewModel {
+final class ProfilePageViewModel: ProfilePageOutput {
     var username: String = ""
     
     private let userDataManager: UserDataManagerProtocol
@@ -17,7 +17,7 @@ final class ProfilePageViewModel {
         self.username = userDataManager.getUsername() ?? ""
     }
     
-    func save() {
+    func saveUserName() {
         let trimmed = username.trimmingCharacters(in: .whitespacesAndNewlines)
         userDataManager.saveUsername(trimmed)
     }

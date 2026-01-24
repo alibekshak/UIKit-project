@@ -67,6 +67,10 @@ private extension DependencyManager {
             TextInfoCoreDataStore()
         }.inObjectScope(.container)
         
+        container.register(UserDataManagerProtocol.self) { _ in
+            UserDataManager()
+        }.inObjectScope(.container)
+        
         return self
     }
 }
