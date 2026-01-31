@@ -18,7 +18,7 @@ class ProfilePageViewController: UIViewController {
         textField.placeholder = "Add name"
         textField.font = .systemFont(ofSize: 16, weight: .semibold)
         textField.borderStyle = .roundedRect
-        textField.backgroundColor = .systemGray4
+        textField.backgroundColor = .systemGray3
         textField.clearButtonMode = .whileEditing
         textField.autocapitalizationType = .allCharacters
         textField.autocorrectionType = .no
@@ -109,7 +109,7 @@ class ProfilePageViewController: UIViewController {
     private func updateButtonsState() {
         let trimmed = (textField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         saveButton.isEnabled = !trimmed.isEmpty
-        clearButton.isEnabled = trimmed.isEmpty
+        clearButton.isEnabled = !trimmed.isEmpty
         saveButton.alpha = saveButton.isEnabled ? 1 : 0.6
     }
     
