@@ -16,21 +16,28 @@ class ProfilePageViewController: UIViewController {
     let textField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Add name"
-        textField.font = .systemFont(ofSize: 14, weight: .semibold)
+        textField.font = .systemFont(ofSize: 16, weight: .semibold)
         textField.borderStyle = .roundedRect
+        textField.backgroundColor = .systemGray4
         textField.clearButtonMode = .whileEditing
-        textField.autocapitalizationType = .words
+        textField.autocapitalizationType = .allCharacters
         textField.autocorrectionType = .no
         textField.translatesAutoresizingMaskIntoConstraints = false
         
         return textField
     }()
     
-    private lazy var buttonsStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [saveButton, clearButton])
+    private lazy var stackView: UIStackView = {
+        let stack = UIStackView(
+            arrangedSubviews: [
+                textField,
+                saveButton
+            ]
+        )
         stack.axis = .horizontal
-        stack.spacing = 12
-        stack.distribution = .fillEqually
+        stack.spacing = 8
+        stack.alignment = .fill
+        stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -44,11 +51,14 @@ class ProfilePageViewController: UIViewController {
         return button
     }()
     
-    let clearButton:  UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Clear", for: .normal)
+    private lazy var clearButton:  UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            title: "Clear",
+            style: .plain,
+            target: self,
+            action: #selector(clearTapped)
+        )
         button.tintColor = .red
-        button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
@@ -56,6 +66,7 @@ class ProfilePageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        navigationItem.rightBarButtonItem = clearButton
         textField.returnKeyType = .done
         textField.delegate = self
         
@@ -72,20 +83,18 @@ class ProfilePageViewController: UIViewController {
     // MARK: Private methods
     
     private func setupView() {
-        view.addSubview(textField)
-        view.addSubview(buttonsStack)
-
+        view.addSubview(stackView)
+        
+        textField.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        saveButton.setContentHuggingPriority(.required, for: .horizontal)
+        saveButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+        
         NSLayoutConstraint.activate([
-            textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
-            textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            textField.heightAnchor.constraint(equalToConstant: 44),
-
-            buttonsStack.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
-            buttonsStack.leadingAnchor.constraint(equalTo: textField.leadingAnchor),
-            buttonsStack.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
-            buttonsStack.heightAnchor.constraint(equalToConstant: 44),
+            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
+
     }
     
     private func bindViewModel() {
@@ -95,16 +104,13 @@ class ProfilePageViewController: UIViewController {
     private func setupActions() {
         textField.addTarget(self, action: #selector(textChanged), for: .editingChanged)
         saveButton.addTarget(self, action: #selector(saveTapped), for: .touchUpInside)
-        clearButton.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
     }
     
     private func updateButtonsState() {
         let trimmed = (textField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         saveButton.isEnabled = !trimmed.isEmpty
-        clearButton.isEnabled = !(textField.text ?? "").isEmpty
-
-        saveButton.alpha = saveButton.isEnabled ? 1 : 0.4
-        clearButton.alpha = clearButton.isEnabled ? 1 : 0.4
+        clearButton.isEnabled = trimmed.isEmpty
+        saveButton.alpha = saveButton.isEnabled ? 1 : 0.6
     }
     
     // MARK: - Actions
