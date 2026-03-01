@@ -110,7 +110,7 @@ class ProfilePageViewController: UIViewController {
         let trimmed = (textField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         saveButton.isEnabled = !trimmed.isEmpty
         clearButton.isEnabled = !trimmed.isEmpty
-        saveButton.alpha = saveButton.isEnabled ? 1 : 0.6
+        saveButton.alpha = saveButton.isEnabled ? 1 : 0.5
     }
     
     // MARK: - Actions
@@ -122,8 +122,8 @@ class ProfilePageViewController: UIViewController {
     
     @objc private func saveTapped() {
         view.endEditing(true)
-        output?.saveUserName()
         updateButtonsState()
+        output?.saveUserName()
     }
     
     @objc private func clearTapped() {
