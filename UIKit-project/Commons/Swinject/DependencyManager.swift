@@ -55,12 +55,20 @@ private extension DependencyManager {
             SettingsPageModuleAssembly(injection: self)
         }
         
+        container.register(ProfilePageModuleAssembly.self) { [unowned self] _ in
+            ProfilePageModuleAssembly(injection: self)
+        }
+        
         return self
     }
     
     func registerManagers() -> Self {
         container.register(TextInfoStoreProtocol.self) { _ in
             TextInfoCoreDataStore()
+        }.inObjectScope(.container)
+        
+        container.register(UserDataManagerProtocol.self) { _ in
+            UserDataManager()
         }.inObjectScope(.container)
         
         return self

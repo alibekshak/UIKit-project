@@ -14,4 +14,8 @@ final class SettingsViewModel: SettingsPageOutput {
     func navigateToFavoritePage() {
         router?.routToFavoritePageView()
     }
+    
+    func navigateToProfilePage() {
+        router?.routToProfilePage()
+    }
 }

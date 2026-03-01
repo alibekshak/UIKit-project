@@ -111,7 +111,7 @@ class SettingsViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func didTapProfile() {
-        print("профиль")
+        output?.navigateToProfilePage()
     }
     
     @objc private func didTapFavorite() {
