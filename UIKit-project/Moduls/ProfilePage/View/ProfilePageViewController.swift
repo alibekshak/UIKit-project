@@ -13,24 +13,24 @@ class ProfilePageViewController: UIViewController {
     
     // MARK: - UI
     
-    let textField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Add name"
-        textField.font = .systemFont(ofSize: 16, weight: .semibold)
-        textField.borderStyle = .roundedRect
-        textField.backgroundColor = .systemGray3
-        textField.clearButtonMode = .whileEditing
-        textField.autocapitalizationType = .allCharacters
-        textField.autocorrectionType = .no
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        
-        return textField
-    }()
+    let nameField = makeTextField(
+        placeholder: "Add name"
+    )
+    
+    let phoneField = makeTextField(
+        placeholder: "Add phone number",
+        keyboard: .phonePad
+    )
+    
+    let emailField = makeTextField(
+        placeholder: "Add email",
+        keyboard: .emailAddress
+    )
     
     private lazy var stackView: UIStackView = {
         let stack = UIStackView(
             arrangedSubviews: [
-                textField,
+                nameField,
                 saveButton
             ]
         )
@@ -67,8 +67,8 @@ class ProfilePageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = clearButton
-        textField.returnKeyType = .done
-        textField.delegate = self
+        nameField.returnKeyType = .done
+        nameField.delegate = self
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
@@ -82,10 +82,29 @@ class ProfilePageViewController: UIViewController {
     
     // MARK: Private methods
     
+    private static func makeTextField(
+        placeholder: String,
+        keyboard: UIKeyboardType = .default
+    ) -> UITextField {
+
+        let textField = UITextField()
+        textField.placeholder = placeholder
+        textField.font = .systemFont(ofSize: 16, weight: .semibold)
+        textField.borderStyle = .roundedRect
+        textField.backgroundColor = .systemGray3
+        textField.clearButtonMode = .whileEditing
+        textField.autocapitalizationType = .allCharacters
+        textField.autocorrectionType = .no
+        textField.keyboardType = keyboard
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        
+        return textField
+    }
+    
     private func setupView() {
         view.addSubview(stackView)
         
-        textField.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        nameField.heightAnchor.constraint(equalToConstant: 44).isActive = true
         saveButton.setContentHuggingPriority(.required, for: .horizontal)
         saveButton.setContentCompressionResistancePriority(.required, for: .horizontal)
         
@@ -98,16 +117,16 @@ class ProfilePageViewController: UIViewController {
     }
     
     private func bindViewModel() {
-        textField.text = output?.username
+        nameField.text = output?.username
     }
     
     private func setupActions() {
-        textField.addTarget(self, action: #selector(textChanged), for: .editingChanged)
+        nameField.addTarget(self, action: #selector(textChanged), for: .editingChanged)
         saveButton.addTarget(self, action: #selector(saveTapped), for: .touchUpInside)
     }
     
     private func updateButtonsState() {
-        let trimmed = (textField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmed = (nameField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         saveButton.isEnabled = !trimmed.isEmpty
         clearButton.isEnabled = !trimmed.isEmpty
         saveButton.alpha = saveButton.isEnabled ? 1 : 0.5
@@ -116,7 +135,7 @@ class ProfilePageViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func textChanged() {
-        output?.username = textField.text ?? ""
+        output?.username = nameField.text ?? ""
         updateButtonsState()
     }
     
@@ -128,7 +147,7 @@ class ProfilePageViewController: UIViewController {
     
     @objc private func clearTapped() {
         output?.clearUserName()
-        textField.text = ""
+        nameField.text = ""
         output?.username = ""
         updateButtonsState()
     }
