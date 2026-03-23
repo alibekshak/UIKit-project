@@ -35,7 +35,7 @@ final class ProfilePageViewModel: ProfilePageOutput {
     
     // MARK: - Methods for phone
     
-    func savePhomeNumber() {
+    func savePhoneNumber() {
         let trimmed = phoneNumber.trimmingCharacters(in: .whitespacesAndNewlines)
         userDataManager.savePhone(trimmed)
     }
