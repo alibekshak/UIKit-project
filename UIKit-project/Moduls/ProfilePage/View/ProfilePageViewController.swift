@@ -13,18 +13,22 @@ class ProfilePageViewController: UIViewController {
     
     // MARK: - UI
     
-    let nameField = makeTextField(
-        placeholder: "Add name"
+    private let nameField = makeTextField(
+        placeholder: "Add name",
+        keyboard: .default,
+        capitalization: .words
     )
     
-    let phoneField = makeTextField(
+    private let phoneField = makeTextField(
         placeholder: "Add phone number",
-        keyboard: .phonePad
+        keyboard: .phonePad,
+        capitalization: .none
     )
     
-    let emailField = makeTextField(
+    private let emailField = makeTextField(
         placeholder: "Add email",
-        keyboard: .emailAddress
+        keyboard: .emailAddress,
+        capitalization: .none
     )
     
     private lazy var stackView: UIStackView = {
@@ -84,16 +88,17 @@ class ProfilePageViewController: UIViewController {
     
     private static func makeTextField(
         placeholder: String,
-        keyboard: UIKeyboardType = .default
+        keyboard: UIKeyboardType = .default,
+        capitalization: UITextAutocapitalizationType = .none
     ) -> UITextField {
-
+        
         let textField = UITextField()
         textField.placeholder = placeholder
         textField.font = .systemFont(ofSize: 16, weight: .semibold)
         textField.borderStyle = .roundedRect
-        textField.backgroundColor = .systemGray3
+        textField.backgroundColor = .secondarySystemBackground
         textField.clearButtonMode = .whileEditing
-        textField.autocapitalizationType = .allCharacters
+        textField.autocapitalizationType = capitalization
         textField.autocorrectionType = .no
         textField.keyboardType = keyboard
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -159,8 +164,20 @@ class ProfilePageViewController: UIViewController {
 
 extension ProfilePageViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        saveTapped()
+        switch textField {
+        case nameField:
+            phoneField.becomeFirstResponder()
+            
+        case phoneField:
+            emailField.becomeFirstResponder()
+            
+        case emailField:
+            textField.resignFirstResponder()
+            saveTapped()
+            
+        default:
+            textField.resignFirstResponder()
+        }
         return true
     }
 }
