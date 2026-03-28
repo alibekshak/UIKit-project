@@ -39,15 +39,15 @@ class ProfilePageViewController: UIViewController {
                 emailField
             ]
         )
-        stack.axis = .horizontal
-        stack.spacing = 8
+        stack.axis = .vertical
+        stack.spacing = 12
         stack.alignment = .fill
         stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
         
         return stack
     }()
-    
+
     private lazy var stackView: UIStackView = {
         let stack = UIStackView(
             arrangedSubviews: [
@@ -55,11 +55,11 @@ class ProfilePageViewController: UIViewController {
                 saveButton
             ]
         )
-        stack.axis = .horizontal
-        stack.spacing = 16
+        stack.axis = .vertical
+        stack.spacing = 20
         stack.alignment = .fill
-        stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
+        
         return stack
     }()
     
@@ -89,6 +89,7 @@ class ProfilePageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = clearButton
+        navigationItem.title = "Profile info"
         nameField.returnKeyType = .done
         nameField.delegate = self
         
@@ -127,14 +128,16 @@ class ProfilePageViewController: UIViewController {
     private func setupView() {
         view.addSubview(stackView)
         
-        [nameField, phoneField, emailField].forEach { $0.heightAnchor.constraint(equalToConstant: 44).isActive = true }
-        saveButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        [nameField, phoneField, emailField].forEach {
+            $0.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        }
         
+        saveButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
-            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
     
