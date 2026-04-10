@@ -13,10 +13,34 @@ class SettingsViewController: UIViewController {
     
     // MARK: - UI
     
+    private let contentView = UIView()
+    
+    private lazy var titleLabel: UILabel = {
+        let lable = UILabel()
+        lable.text = "Настройки"
+        lable.font = .systemFont(ofSize: 32, weight: .bold)
+        lable.textColor = .label
+        lable.translatesAutoresizingMaskIntoConstraints = true
+        
+        return lable
+    }()
+    
+    private lazy var subtitleLabel: UILabel = {
+        let lable = UILabel()
+        lable.text = "Управление профилем и избранным"
+        lable.font = .systemFont(ofSize: 14, weight: .regular)
+        lable.textColor = .secondaryLabel
+        lable.translatesAutoresizingMaskIntoConstraints = false
+        
+        return lable
+    }()
+    
     private lazy var profileButton: UIButton = {
         let button = makeSettingsButton(
             title: "Профиль",
-            systemImage: "person.circle"
+            subtitle: "Личные данные и информация",
+            systemImage: "person.crop.circle.fill",
+            tintColor: .systemBlue
         )
         button.addTarget(self, action: #selector(didTapProfile), for: .touchUpInside)
         return button
@@ -25,7 +49,9 @@ class SettingsViewController: UIViewController {
     private lazy var favoriteButton: UIButton = {
         let button = makeSettingsButton(
             title: "Избранное",
-            systemImage: "heart"
+            subtitle: "Ваши сохранённые элементы",
+            systemImage: "heart.fill",
+            tintColor: .systemPink
         )
         button.addTarget(self, action: #selector(didTapFavorite), for: .touchUpInside)
         return button
@@ -34,16 +60,17 @@ class SettingsViewController: UIViewController {
     private lazy var exitButton: UIButton = {
         let button = makeSettingsButton(
             title: "Выйти",
-            systemImage: "iphone.and.arrow.forward.outward",
-            isExitButton: true
+            subtitle: "Завершить текущую сессию",
+            systemImage: "rectangle.portrait.and.arrow.right",
+            tintColor: .systemRed,
+            isDestructive: true
         )
         button.addTarget(self, action: #selector(didTapExit), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    
-    private lazy var stackView: UIStackView = {
+    private lazy var buttonsStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [profileButton, favoriteButton])
         stack.axis = .vertical
         stack.spacing = 16
@@ -62,48 +89,124 @@ class SettingsViewController: UIViewController {
     }
     
     private func setupUI() {
-        title = "Настройки"
-        view.backgroundColor = .systemBackground
-        view.addSubview(stackView)
-        view.addSubview(exitButton)
+        view.backgroundColor = UIColor.systemGroupedBackground
+        
+        navigationItem.largeTitleDisplayMode = .never
+        title = ""
+        
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.backgroundColor = .clear
+        
+        view.addSubview(contentView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(subtitleLabel)
+        contentView.addSubview(buttonsStackView)
+        contentView.addSubview(exitButton)
     }
     
     private func setupConstraints() {
         let guide = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: guide.topAnchor, constant: 24),
-            stackView.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -16),
+            contentView.topAnchor.constraint(equalTo: guide.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
             
-            exitButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -34),
-            exitButton.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 16),
-            exitButton.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -16)
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 6),
+            subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            subtitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+            
+            buttonsStackView.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 28),
+            buttonsStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            buttonsStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            
+            exitButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            exitButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            exitButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -20)
         ])
     }
+    
     
     // MARK: - Button Factory
     
     private func makeSettingsButton(
         title: String,
+        subtitle: String,
         systemImage: String,
-        isExitButton: Bool = false
+        tintColor: UIColor,
+        isDestructive: Bool = false
     ) -> UIButton {
         let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
         
         var config = UIButton.Configuration.plain()
+        config.title = title
+        config.subtitle = subtitle
         config.image = UIImage(systemName: systemImage)
         config.imagePlacement = .leading
-        config.imagePadding = 12
-        config.title = title
-        config.baseForegroundColor = isExitButton ? .red : .label
-        config.titleAlignment = .leading
-        config.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 12, bottom: 16, trailing: 12)
+        config.imagePadding = 14
+        config.titlePadding = 4
+        config.baseForegroundColor = isDestructive ? .systemRed : .label
+        config.contentInsets = NSDirectionalEdgeInsets(top: 18, leading: 16, bottom: 18, trailing: 16)
+        
+        let backgroundColor = isDestructive
+            ? UIColor.systemRed.withAlphaComponent(0.08)
+            : UIColor.secondarySystemGroupedBackground
+        
+        config.background.backgroundColor = backgroundColor
+        config.background.cornerRadius = 18
+        config.background.strokeWidth = 1
+        config.background.strokeColor = isDestructive
+            ? UIColor.systemRed.withAlphaComponent(0.12)
+            : UIColor.separator.withAlphaComponent(0.18)
+        
+        let titleAttributes = AttributeContainer([
+            .font: UIFont.systemFont(ofSize: 17, weight: .semibold)
+        ])
+        
+        let subtitleAttributes = AttributeContainer([
+            .font: UIFont.systemFont(ofSize: 13, weight: .regular),
+            .foregroundColor: isDestructive ? UIColor.systemRed.withAlphaComponent(0.8) : UIColor.secondaryLabel
+        ])
+        
+        config.attributedTitle = AttributedString(title, attributes: titleAttributes)
+        config.attributedSubtitle = AttributedString(subtitle, attributes: subtitleAttributes)
+        
+        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .semibold)
+        config.preferredSymbolConfigurationForImage = symbolConfig
         
         button.configuration = config
         button.contentHorizontalAlignment = .leading
-        button.backgroundColor = isExitButton ? .systemRed.withAlphaComponent(0.3) : .systemGray6
-        button.layer.cornerRadius = 12
+        button.tintColor = tintColor
+        
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.05
+        button.layer.shadowRadius = 10
+        button.layer.shadowOffset = CGSize(width: 0, height: 4)
+        
+        NSLayoutConstraint.activate([
+            button.heightAnchor.constraint(greaterThanOrEqualToConstant: 76)
+        ])
+        
+        button.configurationUpdateHandler = { button in
+            guard var updatedConfig = button.configuration else { return }
+            
+            switch button.state {
+            case .highlighted:
+                updatedConfig.background.backgroundColor = backgroundColor.withAlphaComponent(0.75)
+                button.transform = CGAffineTransform(scaleX: 0.985, y: 0.985)
+            default:
+                updatedConfig.background.backgroundColor = backgroundColor
+                button.transform = .identity
+            }
+            
+            button.configuration = updatedConfig
+        }
         
         return button
     }
