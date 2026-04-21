@@ -26,4 +26,14 @@ final class FavoritePageViewModel: FavoritePageOutput {
     func tapToDetailInfoView(infoData: TextInfoData) {
         router?.routToDetailInfoView(info: infoData)
     }
+    
+    func deleteFavorite(_ item: TextInfoData) {
+        do {
+            try store.delete(item)
+            let updated = (try? store.fetchAll()) ?? []
+            view?.showStoredInfo(content: updated)
+        } catch {
+            print("Failed to delete favorite: \(error)")
+        }
+    }
 }

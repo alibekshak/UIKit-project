@@ -14,4 +14,5 @@ protocol FavoritePageInput: AnyObject {
 protocol FavoritePageOutput: AnyObject {
     func loadStoredInfo()
     func tapToDetailInfoView(infoData: TextInfoData)
+    func deleteFavorite(_ item: TextInfoData)
 }

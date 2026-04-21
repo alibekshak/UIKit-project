@@ -105,4 +105,15 @@ extension FavoritePageViewController: UITableViewDataSource, UITableViewDelegate
         let data = storedInfo[indexPath.row]
         output?.tapToDetailInfoView(infoData: data)
     }
+    
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) {
+        guard editingStyle == .delete else { return }
+        
+        let item = storedInfo[indexPath.row]
+        output?.deleteFavorite(item)
+    }
 }

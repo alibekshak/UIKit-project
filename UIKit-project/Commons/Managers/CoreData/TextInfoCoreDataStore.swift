@@ -62,6 +62,24 @@ final class TextInfoCoreDataStore: TextInfoStoreProtocol {
         }
     }
     
+    func delete(_ item: TextInfoData) throws {
+        let context = stack.newBackgroundContext()
+        
+        try context.performAndWait {
+            let request: NSFetchRequest<TextInfoEntity> = TextInfoEntity.fetchRequest()
+            request.fetchLimit = 1
+            request.predicate = NSPredicate(format: "id == %@", item.stableId)
+            
+            if let entity = try context.fetch(request).first {
+                context.delete(entity)
+            }
+            
+            if context.hasChanges {
+                try context.save()
+            }
+        }
+    }
+    
     func deleteAll() throws {
         let ctx = stack.newBackgroundContext()
 
