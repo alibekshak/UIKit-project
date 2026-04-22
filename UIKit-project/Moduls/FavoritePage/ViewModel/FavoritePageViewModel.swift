@@ -36,4 +36,16 @@ final class FavoritePageViewModel: FavoritePageOutput {
             print("Failed to delete favorite: \(error)")
         }
     }
+    
+    func deleteFavorites(_ items: [TextInfoData]) {
+        do {
+            for item in items {
+                try store.delete(item)
+            }
+            let updated = (try? store.fetchAll()) ?? []
+            view?.showStoredInfo(content: updated)
+        } catch {
+            print("Failed to delete favorites: \(error)")
+        }
+    }
 }

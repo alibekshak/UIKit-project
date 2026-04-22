@@ -28,6 +28,18 @@ class FavoritePageViewController: BaseViewController {
         return tableView
     }()
     
+    private lazy var deleteSelectedButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Delete Selected", for: .normal)
+        button.addTarget(self, action: #selector(deleteSelectedTapped), for: .touchUpInside)
+        button.backgroundColor = .systemRed
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 10
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.isHidden = true
+        return button
+    }()
+    
     private let emptyStateLabel: UILabel = {
         let label = UILabel()
         label.text = "No favorites"
@@ -44,6 +56,7 @@ class FavoritePageViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Favorites"
+        navigationItem.rightBarButtonItem = editButtonItem
         setupView()
     }
     
@@ -52,12 +65,13 @@ class FavoritePageViewController: BaseViewController {
         output?.loadStoredInfo()
     }
     
-    // MARK: Private methods
+    // MARK: - Private methods
     
     private func setupView() {
         view.addSubview(tableView)
         view.addSubview(emptyStateLabel)
         
+        tableView.allowsMultipleSelectionDuringEditing = true
         tableView.backgroundView = emptyStateLabel
         emptyStateLabel.isHidden = true
         
@@ -70,6 +84,54 @@ class FavoritePageViewController: BaseViewController {
             emptyStateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emptyStateLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+        
+        view.addSubview(deleteSelectedButton)
+        
+        NSLayoutConstraint.activate([
+            deleteSelectedButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            deleteSelectedButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            deleteSelectedButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            deleteSelectedButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
+    private func showDeleteButton() {
+        deleteSelectedButton.isHidden = false
+    }
+
+    private func hideDeleteButton() {
+        deleteSelectedButton.isHidden = true
+    }
+    
+    private func updateDeleteButtonState() {
+        let hasSelection = !(tableView.indexPathsForSelectedRows?.isEmpty ?? true)
+        deleteSelectedButton.isEnabled = hasSelection
+        deleteSelectedButton.alpha = hasSelection ? 1 : 0.5
+    }
+    
+    @objc private func deleteSelectedTapped() {
+        guard let selectedIndexPaths = tableView.indexPathsForSelectedRows else { return }
+        
+        let itemsToDelete = selectedIndexPaths.map { storedInfo[$0.row] }
+        
+        output?.deleteFavorites(itemsToDelete)
+        
+        tableView.indexPathsForSelectedRows?.forEach {
+            tableView.deselectRow(at: $0, animated: false)
+        }
+        
+        setEditing(false, animated: true)
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        tableView.setEditing(editing, animated: animated)
+        
+        if editing {
+            showDeleteButton()
+        } else {
+            hideDeleteButton()
+        }
     }
 }
 
@@ -100,10 +162,21 @@ extension FavoritePageViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView.isEditing {
+            updateDeleteButtonState()
+            return
+        }
+        
         tableView.deselectRow(at: indexPath, animated: true)
         
         let data = storedInfo[indexPath.row]
         output?.tapToDetailInfoView(infoData: data)
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if tableView.isEditing {
+            updateDeleteButtonState()
+        }
     }
     
     func tableView(
