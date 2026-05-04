@@ -10,4 +10,5 @@ import Foundation
 protocol SettingsPageOutput: AnyObject {
     func navigateToFavoritePage()
     func navigateToProfilePage()
+    func logout()
 }

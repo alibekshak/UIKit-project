@@ -8,6 +8,7 @@
 import Foundation
 
 final class SettingsViewModel: SettingsPageOutput {
+
     
     var router: SettingsViewRouter?
     
@@ -17,5 +18,9 @@ final class SettingsViewModel: SettingsPageOutput {
     
     func navigateToProfilePage() {
         router?.routToProfilePage()
+    }
+    
+    func logout() {
+        // TODO: - Create logout logic
     }
 }

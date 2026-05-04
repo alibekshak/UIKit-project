@@ -29,16 +29,15 @@ final class DependencyManager: ModuleInjecting {
 }
 
 private extension DependencyManager {
-    func registerServices() -> Self {
+    func registerServices() {
         container.register(HomePageServiceProtocol.self) { _ in
             HomePageService()
         }
         .inObjectScope(.container)
         
-        return self
     }
     
-    func registerModules() -> Self {
+    func registerModules() {
         container.register(HomePageModuleAssembly.self) { [unowned self] _ in
             HomePageModuleAssembly(injection: self)
         }
@@ -58,11 +57,9 @@ private extension DependencyManager {
         container.register(ProfilePageModuleAssembly.self) { [unowned self] _ in
             ProfilePageModuleAssembly(injection: self)
         }
-        
-        return self
     }
     
-    func registerManagers() -> Self {
+    func registerManagers() {
         container.register(TextInfoStoreProtocol.self) { _ in
             TextInfoCoreDataStore()
         }.inObjectScope(.container)
@@ -70,8 +67,6 @@ private extension DependencyManager {
         container.register(UserDataManagerProtocol.self) { _ in
             UserDataManager()
         }.inObjectScope(.container)
-        
-        return self
     }
 }
 
