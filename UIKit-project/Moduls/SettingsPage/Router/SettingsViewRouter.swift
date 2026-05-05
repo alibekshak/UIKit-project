@@ -28,4 +28,9 @@ class SettingsViewRouter: SettingsViewRouterInput {
         createdVC.hidesBottomBarWhenPushed = true
         viewController?.navigationController?.pushViewController(createdVC, animated: true)
     }
+    
+    func routeToHomePage() {
+        viewController?.navigationController?.popToRootViewController(animated: false)
+        viewController?.tabBarController?.selectedIndex = 0
+    }
 }

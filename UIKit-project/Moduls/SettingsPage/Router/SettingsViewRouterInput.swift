@@ -10,4 +10,5 @@ import Foundation
 protocol SettingsViewRouterInput {
     func routToFavoritePageView()
     func routToProfilePage()
+    func routeToHomePage()
 }
