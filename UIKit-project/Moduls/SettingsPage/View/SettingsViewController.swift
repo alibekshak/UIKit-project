@@ -215,11 +215,15 @@ class SettingsViewController: UIViewController {
         button.configurationUpdateHandler = { button in
             guard var updatedConfig = button.configuration else { return }
             
-            switch button.state {
-            case .highlighted:
-                updatedConfig.background.backgroundColor = backgroundColor.withAlphaComponent(0.75)
+            if button.state == .highlighted {
+                if isDestructive {
+                    updatedConfig.background.backgroundColor = UIColor.systemRed.withAlphaComponent(0.08)
+                } else {
+                    updatedConfig.background.backgroundColor = backgroundColor.withAlphaComponent(0.75)
+                }
+                
                 button.transform = CGAffineTransform(scaleX: 0.985, y: 0.985)
-            default:
+            } else {
                 updatedConfig.background.backgroundColor = backgroundColor
                 button.transform = .identity
             }
