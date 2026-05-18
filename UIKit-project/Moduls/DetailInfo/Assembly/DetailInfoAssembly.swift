@@ -11,9 +11,13 @@ class DetailInfoAssembly: BaseModuleAssembly {
     func assembly(item: TextInfoData) -> UIViewController {
         let viewControllers = DetailInfoViewController(item: item)
         let viewModel = DetailInfoViewModel(dateStore: injection.inject(TextInfoStoreProtocol.self))
+        let store = injection.inject(TextInfoStoreProtocol.self)
         
         viewModel.view = viewControllers
         viewControllers.output = viewModel
+        
+        let isFavorite = (try? store.exists(item)) ?? false
+        viewControllers.configureInitialFavoriteState(isFavorite: isFavorite)
         
         return viewControllers
     }

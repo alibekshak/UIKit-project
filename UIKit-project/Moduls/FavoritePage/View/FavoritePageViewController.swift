@@ -51,12 +51,21 @@ class FavoritePageViewController: BaseViewController {
         return label
     }()
     
+    private lazy var editFavoritesButton: UIBarButtonItem = {
+        UIBarButtonItem(
+            title: "Edit",
+            style: .plain,
+            target: self,
+            action: #selector(editFavoritesTapped)
+        )
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Favorites"
-        navigationItem.rightBarButtonItem = editButtonItem
+        navigationItem.rightBarButtonItem = editFavoritesButton
         setupView()
     }
     
@@ -123,12 +132,19 @@ class FavoritePageViewController: BaseViewController {
         setEditing(false, animated: true)
     }
     
+    @objc private func editFavoritesTapped() {
+        setEditing(!isEditing, animated: true)
+    }
+    
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         tableView.setEditing(editing, animated: animated)
         
+        editFavoritesButton.title = editing ? "Cancel" : "Edit"
+        
         if editing {
             showDeleteButton()
+            updateDeleteButtonState()
         } else {
             hideDeleteButton()
         }

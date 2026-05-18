@@ -102,6 +102,10 @@ class DetailInfoViewController: UIViewController {
         output?.onViewDidLoad(item: item)
     }
     
+    func configureInitialFavoriteState(isFavorite: Bool) {
+        setFavoriteButtonState(isFavorite: isFavorite)
+    }
+    
     // MARK: - Actions
     
     @objc private func didAddToFavorite() {

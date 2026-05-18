@@ -10,7 +10,9 @@ import UIKit
 class SettingsPageModuleAssembly: BaseModuleAssembly {
     func assemble() -> UIViewController {
         let viewControllers = SettingsViewController()
-        let viewModel = SettingsViewModel()
+        let viewModel = SettingsViewModel(
+             store: injection.inject(TextInfoStoreProtocol.self)
+         )
         let router = SettingsViewRouter()
         
         viewModel.router = router

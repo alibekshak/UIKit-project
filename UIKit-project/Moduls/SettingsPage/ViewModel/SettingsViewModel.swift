@@ -8,8 +8,13 @@
 import Foundation
 
 final class SettingsViewModel: SettingsPageOutput {
-    
+
     var router: SettingsViewRouter?
+    let store: TextInfoStoreProtocol
+
+     init(store: TextInfoStoreProtocol) {
+         self.store = store
+     }
     
     func navigateToFavoritePage() {
         router?.routToFavoritePageView()
@@ -17,5 +22,14 @@ final class SettingsViewModel: SettingsPageOutput {
     
     func navigateToProfilePage() {
         router?.routToProfilePage()
+    }
+    
+    func logout() {
+        do {
+            try store.deleteAll()
+            router?.routeToHomePage()
+        } catch {
+            print("Failed to logout:", error)
+        }
     }
 }

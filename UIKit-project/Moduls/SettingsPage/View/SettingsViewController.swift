@@ -20,7 +20,7 @@ class SettingsViewController: UIViewController {
         lable.text = "Настройки"
         lable.font = .systemFont(ofSize: 32, weight: .bold)
         lable.textColor = .label
-        lable.translatesAutoresizingMaskIntoConstraints = true
+        lable.translatesAutoresizingMaskIntoConstraints = false
         
         return lable
     }()
@@ -143,8 +143,32 @@ class SettingsViewController: UIViewController {
     ) -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.contentHorizontalAlignment = .leading
+        button.tintColor = tintColor
         
+        button.configuration = makeButtonConfiguration(
+            title: title,
+            subtitle: subtitle,
+            systemImage: systemImage,
+            isDestructive: isDestructive
+        )
+        button.heightAnchor.constraint(greaterThanOrEqualToConstant: 72).isActive = true
+        
+        setupButtonShadow(button, isDestructive: isDestructive)
+        setupChevronIfNeeded(for: button, isDestructive: isDestructive)
+        setupButtonStateHandler(button, isDestructive: isDestructive)
+        
+        return button
+    }
+    
+    private func makeButtonConfiguration(
+        title: String,
+        subtitle: String,
+        systemImage: String,
+        isDestructive: Bool
+    ) -> UIButton.Configuration {
         var config = UIButton.Configuration.plain()
+
         config.title = title
         config.subtitle = subtitle
         config.image = UIImage(systemName: systemImage)
@@ -152,63 +176,97 @@ class SettingsViewController: UIViewController {
         config.imagePadding = 14
         config.titlePadding = 4
         config.baseForegroundColor = isDestructive ? .systemRed : .label
-        config.contentInsets = NSDirectionalEdgeInsets(top: 18, leading: 16, bottom: 18, trailing: 16)
-        
-        let backgroundColor = isDestructive
-            ? UIColor.systemRed.withAlphaComponent(0.08)
-            : UIColor.secondarySystemGroupedBackground
-        
-        config.background.backgroundColor = backgroundColor
-        config.background.cornerRadius = 18
+        config.contentInsets = NSDirectionalEdgeInsets(
+            top: 14,
+            leading: 16,
+            bottom: 14,
+            trailing: 16
+        )
+
+        config.background.backgroundColor = buttonBackgroundColor(isDestructive)
+        config.background.cornerRadius = 16
         config.background.strokeWidth = 1
-        config.background.strokeColor = isDestructive
-            ? UIColor.systemRed.withAlphaComponent(0.12)
-            : UIColor.separator.withAlphaComponent(0.18)
-        
-        let titleAttributes = AttributeContainer([
-            .font: UIFont.systemFont(ofSize: 17, weight: .semibold)
-        ])
-        
-        let subtitleAttributes = AttributeContainer([
-            .font: UIFont.systemFont(ofSize: 13, weight: .regular),
-            .foregroundColor: isDestructive ? UIColor.systemRed.withAlphaComponent(0.8) : UIColor.secondaryLabel
-        ])
-        
-        config.attributedTitle = AttributedString(title, attributes: titleAttributes)
-        config.attributedSubtitle = AttributedString(subtitle, attributes: subtitleAttributes)
-        
-        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .semibold)
-        config.preferredSymbolConfigurationForImage = symbolConfig
-        
-        button.configuration = config
-        button.contentHorizontalAlignment = .leading
-        button.tintColor = tintColor
-        
+        config.background.strokeColor = buttonBorderColor(isDestructive)
+
+        config.attributedTitle = AttributedString(
+            title,
+            attributes: AttributeContainer([
+                .font: UIFont.systemFont(ofSize: 16, weight: .semibold)
+            ])
+        )
+
+        config.attributedSubtitle = AttributedString(
+            subtitle,
+            attributes: AttributeContainer([
+                .font: UIFont.systemFont(ofSize: 13, weight: .regular),
+                .foregroundColor: isDestructive
+                    ? UIColor.systemRed.withAlphaComponent(0.8)
+                    : UIColor.secondaryLabel
+            ])
+        )
+
+        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(
+            pointSize: 20,
+            weight: .semibold
+        )
+
+        return config
+    }
+    
+    
+    private func buttonBackgroundColor(_ isDestructive: Bool) -> UIColor {
+        isDestructive ? .clear : .secondarySystemGroupedBackground
+    }
+
+    private func buttonBorderColor(_ isDestructive: Bool) -> UIColor {
+        isDestructive
+            ? UIColor.systemRed.withAlphaComponent(0.4)
+            : UIColor.separator.withAlphaComponent(0.15)
+    }
+    
+    private func setupButtonShadow(_ button: UIButton, isDestructive: Bool) {
+        guard !isDestructive else { return }
+
         button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.05
-        button.layer.shadowRadius = 10
-        button.layer.shadowOffset = CGSize(width: 0, height: 4)
+        button.layer.shadowOpacity = 0.04
+        button.layer.shadowRadius = 8
+        button.layer.shadowOffset = CGSize(width: 0, height: 3)
+    }
+    
+    private func setupChevronIfNeeded(for button: UIButton, isDestructive: Bool) {
+        guard !isDestructive else { return }
+        
+        let chevron = UIImageView(image: UIImage(systemName: "chevron.right"))
+        chevron.tintColor = .tertiaryLabel
+        chevron.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.addSubview(chevron)
         
         NSLayoutConstraint.activate([
-            button.heightAnchor.constraint(greaterThanOrEqualToConstant: 76)
+            chevron.centerYAnchor.constraint(equalTo: button.centerYAnchor),
+            chevron.trailingAnchor.constraint(equalTo: button.trailingAnchor, constant: -16)
         ])
-        
+    }
+    
+    private func setupButtonStateHandler(_ button: UIButton, isDestructive: Bool) {
+        let backgroundColor = buttonBackgroundColor(isDestructive)
+
         button.configurationUpdateHandler = { button in
-            guard var updatedConfig = button.configuration else { return }
-            
-            switch button.state {
-            case .highlighted:
-                updatedConfig.background.backgroundColor = backgroundColor.withAlphaComponent(0.75)
+            guard var config = button.configuration else { return }
+
+            if button.state == .highlighted {
+                config.background.backgroundColor = isDestructive
+                    ? UIColor.systemRed.withAlphaComponent(0.08)
+                    : backgroundColor.withAlphaComponent(0.75)
+
                 button.transform = CGAffineTransform(scaleX: 0.985, y: 0.985)
-            default:
-                updatedConfig.background.backgroundColor = backgroundColor
+            } else {
+                config.background.backgroundColor = backgroundColor
                 button.transform = .identity
             }
-            
-            button.configuration = updatedConfig
+
+            button.configuration = config
         }
-        
-        return button
     }
     
     // MARK: - Actions
@@ -234,7 +292,7 @@ class SettingsViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: "Отмена", style: .cancel))
         alert.addAction(UIAlertAction(title: "Выйти", style: .destructive, handler: { _ in
-            print("Выход !")
+            self.output?.logout()
         }))
         
         present(alert, animated: true)
