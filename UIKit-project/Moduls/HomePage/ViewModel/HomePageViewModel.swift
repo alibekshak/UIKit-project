@@ -37,7 +37,7 @@ extension HomePageViewModel: HomePageOutput {
         router?.routToFavoritePageView()
     }
     
-    func tapToDetailInfoView(infoData: TextInfoData) {
+    func tapToDetailInfoView(infoData: TextInfoDataModel) {
         router?.routToDetailInfoView(info: infoData)
     }
     

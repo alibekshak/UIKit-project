@@ -8,6 +8,6 @@
 import Foundation
 
 protocol FavoritePageRouterInput {
-    func routToDetailInfoView(info: TextInfoData)
+    func routToDetailInfoView(info: TextInfoDataModel)
     
 }

@@ -16,7 +16,7 @@ final class DetailInfoViewModel: DetailInfoOutput {
         self.dataStore = dateStore
     }
     
-    func addToFavorite(data item: TextInfoData) {
+    func addToFavorite(data item: TextInfoDataModel) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self else { return }
 
@@ -42,7 +42,7 @@ final class DetailInfoViewModel: DetailInfoOutput {
         }
     }
     
-    func onViewDidLoad(item: TextInfoData) {
+    func onViewDidLoad(item: TextInfoDataModel) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self else { return }
             

@@ -13,7 +13,7 @@ class FavoritePageViewController: BaseViewController {
     
     // MARK: - Private properties
     
-    private var storedInfo: [TextInfoData] = []
+    private var storedInfo: [TextInfoDataModel] = []
     
     // MARK: - UI
     
@@ -154,7 +154,7 @@ class FavoritePageViewController: BaseViewController {
 // MARK: - FavoritePageInput
 
 extension FavoritePageViewController: FavoritePageInput {
-    func showStoredInfo(content: [TextInfoData]) {
+    func showStoredInfo(content: [TextInfoDataModel]) {
         self.storedInfo = content
         tableView.reloadData()
         

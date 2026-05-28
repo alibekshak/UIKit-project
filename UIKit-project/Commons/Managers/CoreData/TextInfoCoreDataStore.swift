@@ -15,7 +15,7 @@ final class TextInfoCoreDataStore: TextInfoStoreProtocol {
         self.stack = stack
     }
     
-    func exists(_ item: TextInfoData) throws -> Bool {
+    func exists(_ item: TextInfoDataModel) throws -> Bool {
         let ctx = stack.viewContext
         let request: NSFetchRequest<TextInfoEntity> = TextInfoEntity.fetchRequest()
         request.fetchLimit = 1
@@ -24,7 +24,7 @@ final class TextInfoCoreDataStore: TextInfoStoreProtocol {
         return try ctx.count(for: request) > 0
     }
     
-    func save(_ item: TextInfoData) throws {
+    func save(_ item: TextInfoDataModel) throws {
         let context = stack.newBackgroundContext()
 
         try context.performAndWait {
@@ -46,14 +46,14 @@ final class TextInfoCoreDataStore: TextInfoStoreProtocol {
         }
     }
     
-    func fetchAll() throws -> [TextInfoData] {
+    func fetchAll() throws -> [TextInfoDataModel] {
         let ctx = stack.viewContext
         let request: NSFetchRequest<TextInfoEntity> = TextInfoEntity.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
 
         let results = try ctx.fetch(request)
         return results.map {
-            TextInfoData(
+            TextInfoDataModel(
                 title: $0.title,
                 author: $0.author,
                 genre: $0.genre,
@@ -62,7 +62,7 @@ final class TextInfoCoreDataStore: TextInfoStoreProtocol {
         }
     }
     
-    func delete(_ item: TextInfoData) throws {
+    func delete(_ item: TextInfoDataModel) throws {
         let context = stack.newBackgroundContext()
         
         try context.performAndWait {

@@ -8,7 +8,7 @@
 import UIKit
 
 class DetailInfoAssembly: BaseModuleAssembly {
-    func assembly(item: TextInfoData) -> UIViewController {
+    func assembly(item: TextInfoDataModel) -> UIViewController {
         let viewControllers = DetailInfoViewController(item: item)
         let viewModel = DetailInfoViewModel(dateStore: injection.inject(TextInfoStoreProtocol.self))
         let store = injection.inject(TextInfoStoreProtocol.self)

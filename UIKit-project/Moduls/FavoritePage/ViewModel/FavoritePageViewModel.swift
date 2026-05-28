@@ -23,11 +23,11 @@ final class FavoritePageViewModel: FavoritePageOutput {
         view?.showStoredInfo(content: stored)
     }
     
-    func tapToDetailInfoView(infoData: TextInfoData) {
+    func tapToDetailInfoView(infoData: TextInfoDataModel) {
         router?.routToDetailInfoView(info: infoData)
     }
     
-    func deleteFavorite(_ item: TextInfoData) {
+    func deleteFavorite(_ item: TextInfoDataModel) {
         do {
             try store.delete(item)
             let updated = (try? store.fetchAll()) ?? []
@@ -37,7 +37,7 @@ final class FavoritePageViewModel: FavoritePageOutput {
         }
     }
     
-    func deleteFavorites(_ items: [TextInfoData]) {
+    func deleteFavorites(_ items: [TextInfoDataModel]) {
         do {
             for item in items {
                 try store.delete(item)

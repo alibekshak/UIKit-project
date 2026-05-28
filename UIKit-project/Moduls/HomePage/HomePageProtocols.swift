@@ -10,11 +10,11 @@ import Foundation
 protocol HomePageInput: AnyObject {
     func setLoading(_ isLoading: Bool)
     func showError(_ message: String)
-    func showInfo(content: [TextInfoData])
+    func showInfo(content: [TextInfoDataModel])
 }
 
 protocol HomePageOutput: AnyObject {
     func loadInfo()
-    func tapToDetailInfoView(infoData: TextInfoData)
+    func tapToDetailInfoView(infoData: TextInfoDataModel)
     func navigateToFavoritePage()
 }

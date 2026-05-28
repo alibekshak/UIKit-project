@@ -8,9 +8,9 @@
 import Foundation
 
 protocol TextInfoStoreProtocol {
-    func save(_ item: TextInfoData) throws
-    func fetchAll() throws -> [TextInfoData]
+    func save(_ item: TextInfoDataModel) throws
+    func fetchAll() throws -> [TextInfoDataModel]
     func deleteAll() throws
-    func delete(_ item: TextInfoData) throws
-    func exists(_ item: TextInfoData) throws -> Bool
+    func delete(_ item: TextInfoDataModel) throws
+    func exists(_ item: TextInfoDataModel) throws -> Bool
 }

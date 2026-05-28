@@ -13,7 +13,7 @@ class HomePageViewController: BaseViewController {
     
     // MARK: - Private properties
     
-    private var infoData: [TextInfoData] = []
+    private var infoData: [TextInfoDataModel] = []
     
     // MARK: - UI
     
@@ -133,7 +133,7 @@ extension HomePageViewController: HomePageInput {
         showAlert(title: message)
     }
     
-    func showInfo(content: [TextInfoData]) {
+    func showInfo(content: [TextInfoDataModel]) {
         self.infoData = content
         self.mainTableView.reloadData()
     }

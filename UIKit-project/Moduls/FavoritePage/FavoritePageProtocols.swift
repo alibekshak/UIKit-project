@@ -8,12 +8,12 @@
 import Foundation
 
 protocol FavoritePageInput: AnyObject {
-    func showStoredInfo(content: [TextInfoData])
+    func showStoredInfo(content: [TextInfoDataModel])
 }
 
 protocol FavoritePageOutput: AnyObject {
     func loadStoredInfo()
-    func tapToDetailInfoView(infoData: TextInfoData)
-    func deleteFavorite(_ item: TextInfoData)
-    func deleteFavorites(_ items: [TextInfoData])
+    func tapToDetailInfoView(infoData: TextInfoDataModel)
+    func deleteFavorite(_ item: TextInfoDataModel)
+    func deleteFavorites(_ items: [TextInfoDataModel])
 }

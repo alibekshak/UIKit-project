@@ -60,7 +60,7 @@ final class HomePageCell: UITableViewCell {
         ])
     }
     
-    public func configure(_ data: TextInfoData) {
+    public func configure(_ data: TextInfoDataModel) {
         title.text = data.title
         author.text = data.author
     }

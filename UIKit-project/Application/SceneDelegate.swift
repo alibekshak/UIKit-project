@@ -36,4 +36,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return splash
     }
 }
-

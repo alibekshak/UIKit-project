@@ -8,8 +8,8 @@
 import Foundation
 
 protocol DetailInfoOutput: AnyObject {
-    func addToFavorite(data: TextInfoData)
-    func onViewDidLoad(item: TextInfoData)
+    func addToFavorite(data: TextInfoDataModel)
+    func onViewDidLoad(item: TextInfoDataModel)
 }
 
 protocol DetailInfoInput: AnyObject {

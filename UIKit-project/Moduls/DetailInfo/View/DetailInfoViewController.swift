@@ -11,7 +11,7 @@ class DetailInfoViewController: UIViewController {
     
     var output: DetailInfoOutput?
     
-    private let item: TextInfoData
+    private let item: TextInfoDataModel
     
     // MARK: - UI
     
@@ -84,7 +84,7 @@ class DetailInfoViewController: UIViewController {
     
     // MARK: - Init
     
-    init(item: TextInfoData) {
+    init(item: TextInfoDataModel) {
         self.item = item
         super.init(nibName: nil, bundle: nil)
         self.hidesBottomBarWhenPushed = true
