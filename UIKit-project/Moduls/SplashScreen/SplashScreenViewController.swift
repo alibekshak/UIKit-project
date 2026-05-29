@@ -31,15 +31,12 @@ class SplashScreenViewController: UIViewController {
     }()
     
     let textLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .label
+        let label = UILabel.make(
+            font: .systemFont(ofSize: 20, weight: .bold),
+            color: .label
+        )
         label.textAlignment = .center
         label.text = "Project UIKit"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.alpha = 0
-        label.isAccessibilityElement = true
-        label.accessibilityLabel = "Project UIKit"
         
         return label
     }()

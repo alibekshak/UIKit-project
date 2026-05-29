@@ -16,23 +16,23 @@ class SettingsViewController: UIViewController {
     private let contentView = UIView()
     
     private lazy var titleLabel: UILabel = {
-        let lable = UILabel()
-        lable.text = "Настройки"
-        lable.font = .systemFont(ofSize: 32, weight: .bold)
-        lable.textColor = .label
-        lable.translatesAutoresizingMaskIntoConstraints = false
+        let label = UILabel.make(
+            font: .systemFont(ofSize: 32, weight: .bold),
+            color: .label
+        )
+        label.text = "Настройки"
         
-        return lable
+        return label
     }()
     
     private lazy var subtitleLabel: UILabel = {
-        let lable = UILabel()
-        lable.text = "Управление профилем и избранным"
-        lable.font = .systemFont(ofSize: 14, weight: .regular)
-        lable.textColor = .secondaryLabel
-        lable.translatesAutoresizingMaskIntoConstraints = false
+        let label = UILabel.make(
+            font: .systemFont(ofSize: 14, weight: .regular),
+            color: .secondaryLabel
+        )
+        label.text = "Управление профилем и избранным"
         
-        return lable
+        return label
     }()
     
     private lazy var profileButton: UIButton = {

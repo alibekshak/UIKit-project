@@ -11,20 +11,22 @@ final class HomePageCell: UITableViewCell {
     
     // MARK: - UI
     private var title: UILabel = {
-        let title = UILabel()
-        title.textColor = .gray
-        title.font = .systemFont(ofSize: 16, weight: .semibold)
-        title.numberOfLines = 1
-        title.translatesAutoresizingMaskIntoConstraints = false
-        return title
+        let label = UILabel.make(
+            font: .systemFont(ofSize: 16, weight: .semibold),
+            color: .gray,
+            numberOfLines: 1
+        )
+        
+        return label
     }()
     
     private var author: UILabel = {
-        let author = UILabel()
-        author.textColor = .darkGray
-        author.font = .systemFont(ofSize: 14, weight: .regular)
-        author.translatesAutoresizingMaskIntoConstraints = false
-        return author
+        let label = UILabel.make(
+            font: .systemFont(ofSize: 14, weight: .regular),
+            color: .darkGray
+        )
+        
+        return label
     }()
     
     

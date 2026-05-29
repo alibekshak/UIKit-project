@@ -41,13 +41,14 @@ class FavoritePageViewController: BaseViewController {
     }()
     
     private let emptyStateLabel: UILabel = {
-        let label = UILabel()
+        let label = UILabel.make(
+            font: .systemFont(ofSize: 16, weight: .medium),
+            color: .lightGray
+        )
         label.text = "No favorites"
-        label.textColor = .lightGray
-        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textAlignment = .center
         label.isHidden = true
-        label.translatesAutoresizingMaskIntoConstraints = false
+        
         return label
     }()
     

@@ -18,10 +18,12 @@ class HomePageViewController: BaseViewController {
     // MARK: - UI
     
     private var navigationTitle: UILabel = {
-        let label = UILabel()
+        let label = UILabel.make(
+            font: .systemFont(ofSize: 22, weight: .bold),
+            color: .black
+        )
         label.text = "Home page"
-        label.textColor = .black
-        label.font = .systemFont(ofSize: 22, weight: .bold)
+        
         return label
     }()
     

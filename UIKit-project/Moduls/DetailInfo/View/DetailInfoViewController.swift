@@ -16,30 +16,33 @@ class DetailInfoViewController: UIViewController {
     // MARK: - UI
     
     private lazy var genreLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .secondaryLabel
-        label.font = .systemFont(ofSize: 14, weight: .regular)
+        let label = UILabel.make(
+            font: .systemFont(ofSize: 14, weight: .regular),
+            color: .secondaryLabel
+        )
         label.text = "Genre: \(item.genre ?? "")"
-        label.numberOfLines = 0
+        
         return label
     }()
     
     private lazy var authorLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .label
-        label.font = .systemFont(ofSize: 16, weight: .medium)
+        let label = UILabel.make(
+            font: .systemFont(ofSize: 16, weight: .medium),
+            color: .label
+        )
         label.text = "Author: \(item.author ?? "")"
-        label.numberOfLines = 0
+        
         return label
     }()
     
     private lazy var contentLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .label
-        label.font = .systemFont(ofSize: 18, weight: .regular)
+        let label = UILabel.make(
+            font: .systemFont(ofSize: 18, weight: .regular),
+            color: .label
+        )
         label.textAlignment = .left
-        label.numberOfLines = 0
         label.text = item.content
+        
         return label
     }()
     

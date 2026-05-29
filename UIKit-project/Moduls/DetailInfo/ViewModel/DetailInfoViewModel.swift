@@ -19,8 +19,7 @@ final class DetailInfoViewModel: DetailInfoOutput {
     func addToFavorite(data item: TextInfoDataModel) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self else { return }
-
-            // На всякий случай повторно проверим
+            
             let isFavorite = (try? self.dataStore.exists(item)) ?? false
             guard !isFavorite else {
                 DispatchQueue.main.async {
